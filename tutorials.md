@@ -31,3 +31,5 @@ https://ethereum.gitbooks.io/frontier-guide/content/testing_contracts_and_transa
 eth.sendTransaction({from: secondary, to: tertiary, value: web3.toWei(1, "ether")});
 
 miner.start(); admin.sleepBlocks(1); miner.stop();
+
+web3.fromWei(eth.getBalance(tertiary), "ether");
