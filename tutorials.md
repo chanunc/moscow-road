@@ -26,3 +26,5 @@ You can destroy the contract with greeter.kill.sendTransaction({from:eth.account
 testing and debugging:
 
 https://ethereum.gitbooks.io/frontier-guide/content/testing_contracts_and_transactions.html
+
+eth.sendTransaction({from: secondary, to: tertiary, value: web3.toWei(1, "ether")});
