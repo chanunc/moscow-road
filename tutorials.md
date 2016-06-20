@@ -21,3 +21,8 @@ Copy and paste the updated code to geth and wait for the Contract mined!.. messa
 Test the contract with greeter.greet()
 You can destroy the contract with greeter.kill.sendTransaction({from:eth.accounts[0]})
 ```
+
+
+testing and debugging:
+
+https://ethereum.gitbooks.io/frontier-guide/content/testing_contracts_and_transactions.html
