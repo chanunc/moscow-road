@@ -35,3 +35,7 @@ miner.start(); admin.sleepBlocks(1); miner.stop();
 web3.fromWei(eth.getBalance(tertiary), "ether");
 
 https://ethereum.gitbooks.io/frontier-guide/content/sending_ether.html
+
+another crowdfunding example:
+
+https://learnxinyminutes.com/docs/solidity/
