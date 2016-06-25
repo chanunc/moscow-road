@@ -39,3 +39,8 @@ https://ethereum.gitbooks.io/frontier-guide/content/sending_ether.html
 another crowdfunding example:
 
 https://learnxinyminutes.com/docs/solidity/
+
+  //ethereum alarm clock
+  //factory contract?
+  //name registry
+  // data store
