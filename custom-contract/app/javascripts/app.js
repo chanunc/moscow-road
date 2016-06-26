@@ -9,7 +9,7 @@ function setStatus(message) {
 
 function refreshBalance() {
   var meta = MetaCoin.deployed();
-
+  console.log(meta);
   meta.getBalance.call(account, {from: account}).then(function(value) {
     var balance_element = document.getElementById("balance");
     balance_element.innerHTML = value.valueOf();
@@ -47,7 +47,6 @@ window.onload = function() {
       alert("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
       return;
     }
-
     accounts = accs;
     account = accounts[0];
 
