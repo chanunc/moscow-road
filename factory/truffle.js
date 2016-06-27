@@ -11,7 +11,6 @@ module.exports = {
   },
   deploy: [
     "Factory",
-    "Crowdfund",
     "MetaCoin",
     "ConvertLib"
   ],
