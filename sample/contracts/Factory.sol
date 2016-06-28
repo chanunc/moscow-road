@@ -21,12 +21,12 @@ contract Factory {
       return crowdfund_address;
   }
 
-  function getContract (uint i) returns (address){
+  function getContract (uint i) constant returns (address){
     return crowdfunds[i].addr;
   }
 
   function sayHi() constant returns (string){
-    return "Fuck you, motherfucker";
+    return "Hello there";
   }
 }
 
