@@ -44,3 +44,5 @@ https://learnxinyminutes.com/docs/solidity/
   //factory contract?
   //name registry
   // data store
+  
+  http://ethereum.stackexchange.com/questions/1415/solidity-create-contract-from-contract
