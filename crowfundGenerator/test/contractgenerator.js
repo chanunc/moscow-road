@@ -21,22 +21,20 @@ contract('Factory', function(accounts) {
   });
 
   // Attempt to get a generated contract to say hello
-  it("test a generated contract", function(done) {
-
-  Factory.new({from: accounts[0]}).then(
-
-    function(factory) {
-
-      factory.createContract(accounts[0],"descriptor text").then(
-        function(address){
-
-          var crowdfund = Crowdfund.at(address);
-          crowdfund.greet.call();
-          // returns 'Unhandled rejection invalid address'
-          done();
-        }).catch(done);
-    }).catch(done);
-
+  it("test a generated contract", function() {
+    return Factory.new({ from: accounts[0] })
+      .then(function(factory) {
+        factory.createContract(accounts[0], "descriptor text", { from: accounts[0] });
+        return factory;
+      }).then(function(factory){
+        return factory.getContract(0,{ from: accounts[0] });
+      }).then(function(address) {
+        var crowdfund = Crowdfund.at(address);
+        return crowdfund.greet.call();
+      })
+      .then(function(greeting) {
+        assert.equal(greeting, "works", "Check that the contract can say hi");
+      })
   });
 
 });
