@@ -2,7 +2,6 @@ contract Factory {
 
   CrowdfundStructure[] public crowdfunds;
 
-  // Simple structure for a crowdfunds extensible for other attributes
   struct CrowdfundStructure {
     address addr;
   }
@@ -16,14 +15,13 @@ contract Factory {
         addr: crowdfund_address
       });
 
-      // Set up the initial conditions of a crowdfund
       Crowdfund crowdfund = Crowdfund(crowdfund_address);
       crowdfund.setRepoOwner(_repo_owner, _repo_web_address);
 
       return crowdfund_address;
   }
 
-  function getNumberOfCrowdfunds() constant returns (uint256){
+  function getNumber() constant returns (uint256){
     return crowdfunds.length;
   }
 
@@ -75,7 +73,7 @@ contract Crowdfund {
   }
 
 
-  /* If the repo owner decides the crowdfund is successful it is closed */
+  /* If the agent decides the crowdfund is successful it is closed */
   function sendTo(address recepient){
     if (msg.sender == repo_owner)
       suicide(recepient); // Send all funds to seller
@@ -95,16 +93,18 @@ contract Crowdfund {
       throw;
   }
 
+  /* debug function */
+  function greet() constant returns (string) {
+      return "works";
+  }
+
+  /* debug function */
   function getRepoOwner() constant returns (address) {
       return repo_owner;
   }
 
+  /* debug function */
   function getRepoAddress() constant returns (string) {
       return repo_web_address;
-  }
-
-  /* debug function */
-  function greet() constant returns (string) {
-      return "works";
   }
 }
