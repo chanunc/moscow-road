@@ -1,11 +1,4 @@
-simple escrow:
-
-https://blog.stakeventures.com/articles/from-contract-to-smart-contract-in-ethereum
-
-
-https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.vnnvjeuym
-
-greeter tutorial:
+Hello world:
 
 ```
 Install geth: bash <(curl -L https://install-geth.ethereum.org)
@@ -22,11 +15,17 @@ Test the contract with greeter.greet()
 You can destroy the contract with greeter.kill.sendTransaction({from:eth.accounts[0]})
 ```
 
+simple escrow:
 
-testing and debugging:
+https://blog.stakeventures.com/articles/from-contract-to-smart-contract-in-ethereum
+
+ethereum for noobs:
+
+https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.vnnvjeuym
+
+testing and debugging tips:
 
 https://ethereum.gitbooks.io/frontier-guide/content/testing_contracts_and_transactions.html
-
 
 eth.sendTransaction({from: secondary, to: tertiary, value: web3.toWei(1, "ether")});
 
@@ -40,9 +39,15 @@ another crowdfunding example:
 
 https://learnxinyminutes.com/docs/solidity/
 
-  //ethereum alarm clock
-  //factory contract?
-  //name registry
-  // data store
+create a contract from a contract:
+
+http://ethereum.stackexchange.com/questions/1415/solidity-create-contract-from-contract
+
+Things to consider:
+
+- ethereum alarm clock
+- factory contract?
+- name registry
+- data store
   
-  http://ethereum.stackexchange.com/questions/1415/solidity-create-contract-from-contract
+
