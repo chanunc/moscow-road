@@ -15,6 +15,21 @@ Test the contract with greeter.greet()
 You can destroy the contract with greeter.kill.sendTransaction({from:eth.accounts[0]})
 ```
 
+Useful commands for the dev console:
+
+```
+personal.newAccount()
+eth.getBalance(eth.accounts[0])
+miner.start(); admin.sleepBlocks(1); miner.stop();
+
+primary = accounts[0]
+secondary = accounts[1]
+eth.sendTransaction({from: primary, to: secondary, value: web3.toWei(1, "ether")});
+
+// convert from wei to ether
+web3.fromWei(eth.getBalance(tertiary), "ether");
+```
+
 simple escrow:
 
 https://blog.stakeventures.com/articles/from-contract-to-smart-contract-in-ethereum
@@ -27,11 +42,7 @@ testing and debugging tips:
 
 https://ethereum.gitbooks.io/frontier-guide/content/testing_contracts_and_transactions.html
 
-eth.sendTransaction({from: secondary, to: tertiary, value: web3.toWei(1, "ether")});
 
-miner.start(); admin.sleepBlocks(1); miner.stop();
-
-web3.fromWei(eth.getBalance(tertiary), "ether");
 
 https://ethereum.gitbooks.io/frontier-guide/content/sending_ether.html
 
