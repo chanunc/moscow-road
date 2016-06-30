@@ -1,11 +1,4 @@
-simple escrow:
-
-https://blog.stakeventures.com/articles/from-contract-to-smart-contract-in-ethereum
-
-
-https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.vnnvjeuym
-
-greeter tutorial:
+Hello world:
 
 ```
 Install geth: bash <(curl -L https://install-geth.ethereum.org)
@@ -22,17 +15,34 @@ Test the contract with greeter.greet()
 You can destroy the contract with greeter.kill.sendTransaction({from:eth.accounts[0]})
 ```
 
+Useful commands for the dev console:
 
-testing and debugging:
+```
+personal.newAccount()
+eth.getBalance(eth.accounts[0])
+miner.start(); admin.sleepBlocks(1); miner.stop();
+
+primary = accounts[0]
+secondary = accounts[1]
+eth.sendTransaction({from: primary, to: secondary, value: web3.toWei(1, "ether")});
+
+// convert from wei to ether
+web3.fromWei(eth.getBalance(tertiary), "ether");
+```
+
+simple escrow:
+
+https://blog.stakeventures.com/articles/from-contract-to-smart-contract-in-ethereum
+
+ethereum for noobs:
+
+https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.vnnvjeuym
+
+testing and debugging tips:
 
 https://ethereum.gitbooks.io/frontier-guide/content/testing_contracts_and_transactions.html
 
 
-eth.sendTransaction({from: secondary, to: tertiary, value: web3.toWei(1, "ether")});
-
-miner.start(); admin.sleepBlocks(1); miner.stop();
-
-web3.fromWei(eth.getBalance(tertiary), "ether");
 
 https://ethereum.gitbooks.io/frontier-guide/content/sending_ether.html
 
@@ -40,9 +50,15 @@ another crowdfunding example:
 
 https://learnxinyminutes.com/docs/solidity/
 
-  //ethereum alarm clock
-  //factory contract?
-  //name registry
-  // data store
+create a contract from a contract:
+
+http://ethereum.stackexchange.com/questions/1415/solidity-create-contract-from-contract
+
+Things to consider:
+
+- ethereum alarm clock
+- factory contract?
+- name registry
+- data store
   
-  http://ethereum.stackexchange.com/questions/1415/solidity-create-contract-from-contract
+
