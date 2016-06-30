@@ -39,7 +39,7 @@ contract Crowdfund {
   /* If the agent decides the crowdfund is successful it is closed */
   function sendTo(address recepient){
     if (msg.sender == repo_owner)
-      suicide(recepient); // Send all funds to seller
+      suicide(recepient); // Send all funds to recepient
     else
       throw;
   }

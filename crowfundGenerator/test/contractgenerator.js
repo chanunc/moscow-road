@@ -63,35 +63,34 @@ contract('Factory', function(accounts) {
   //     })
   // });
 
+  //
+  // it("A single funder should be able to send funds", function() {
+  //
+  //   var fact;
+  //   var repo_owner = accounts[1];
+  //   var funder1 = accounts[2];
+  //
+  //   return Factory.new({ from: accounts[0] })
+  //     .then(function(factory) {
+  //       fact = factory;
+  //       factory.createContract(accounts[0], "descriptor text", { from: accounts[0] });
+  //       return factory;
+  //     }).then(function(factory){
+  //       return factory.getContract(0,{ from: accounts[0] });
+  //     }).then(function(address) {
+  //       var crowdfund = Crowdfund.at(address);
+  //       web3.eth.sendTransaction({value:1, from:funder1, to:crowdfund.address, gas:1000000});
+  //       return crowdfund;
+  //     }).then(function(crowdfund) {
+  //       assert.equal(web3.eth.getBalance(crowdfund.address).toNumber(), 1, "balance should match");
+  //     })
+  // });
 
-  it("A single funder should be able to send funds", function() {
+  it("Cancel a crowdfund", function() {
 
     var fact;
     var repo_owner = accounts[1];
     var funder1 = accounts[2];
-
-    return Factory.new({ from: accounts[0] })
-      .then(function(factory) {
-        fact = factory;
-        factory.createContract(accounts[0], "descriptor text", { from: accounts[0] });
-        return factory;
-      }).then(function(factory){
-        return factory.getContract(0,{ from: accounts[0] });
-      }).then(function(address) {
-        var crowdfund = Crowdfund.at(address);
-        web3.eth.sendTransaction({value:1, from:funder1, to:crowdfund.address, gas:1000000});
-        return crowdfund;
-      }).then(function(crowdfund) {
-        assert.equal(web3.eth.getBalance(crowdfund.address).toNumber(), 1, "balance should match");
-      })
-  });
-
-  it("A single funder should be able to send funds", function() {
-
-    var fact;
-    var repo_owner = accounts[1];
-    var funder1 = accounts[2];
-    var funder2 = accounts[3];
 
     return Factory.new({ from: accounts[0] })
       .then(function(factory) {
@@ -110,8 +109,45 @@ contract('Factory', function(accounts) {
       }).then(function(crowdfund) {
         return crowdfund.cancel({from: repo_owner}).then(function() {
           assert.equal(web3.eth.getBalance(crowdfund.address).toNumber(), 0, "balance should match");
-        });
+        })
       })
   });
+
+
+  it("Release funds of a successful crowdfund", function() {
+
+    var fact;
+    var repo_owner = accounts[1];
+    var funder1 = accounts[2];
+    var funder2 = accounts[3];
+    var recepient = accounts[4];
+
+
+    return Factory.new({ from: accounts[0] })
+      .then(function(factory) {
+        fact = factory;
+        factory.createContract(repo_owner, "descriptor text", { from: accounts[0] });
+        return factory;
+      }).then(function(factory){
+        return factory.getContract(0,{ from: accounts[0] });
+      }).then(function(address) {
+        var crowdfund = Crowdfund.at(address);
+        web3.eth.sendTransaction({value:1, from:funder1, to:crowdfund.address, gas:1000000});
+        web3.eth.sendTransaction({value:1, from:funder2, to:crowdfund.address, gas:1000000});
+        return crowdfund;
+      }).then(function(crowdfund) {
+        assert.equal(web3.eth.getBalance(crowdfund.address).toNumber(), 2, "balance should match");
+        return crowdfund;
+      }).then(function(crowdfund){
+        console.log("start");
+        console.log(web3.eth.getBalance(recepient));
+        return crowdfund.sendTo(recepient, {from: repo_owner}).then(function() {
+          assert.equal(web3.eth.getBalance(crowdfund.address).toNumber(), 0, "balance should match");
+          console.log(web3.eth.getBalance(recepient));
+        })
+      })
+  });
+
+
 
 });

@@ -11,9 +11,7 @@ module.exports = {
   },
   deploy: [
     "Factory",
-    "Crowdfund",
-    "MetaCoin",
-    "ConvertLib"
+    "Crowdfund"
   ],
   rpc: {
     host: "localhost",
