@@ -13,6 +13,7 @@ contract Factory {
   function Factory(){}
 
   function createContract (address _repo_owner, string _repo_web_address) returns (address){
+
       address crowdfund_address = new Crowdfund();
 
       crowdfunds[crowdfunds.length++] = CrowdfundStructure({
