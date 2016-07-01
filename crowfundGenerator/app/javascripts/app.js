@@ -91,13 +91,54 @@ function sendTo() {
   });
 }
 
-function setOwner() {
-    var crowdfund = Crowdfund.deployed();
-    crowdfund.setRepoOwner(owner, "www.google.com",{from: account});
-    // console.log(Crowdfund.deployed().getRepoOwner());
-    // console.log(Crowdfund.deployed().getRepoAddress());
+function createCrowdfund() {
 
+    var factory = Factory.deployed();
+    var crowdfund_address;
+    var crowdfund;
+
+    return factory.sayHi.call()
+      .then(function (message){
+        return console.log(message);
+      }).then(function() {
+        return factory.createContract(owner, "https://github.com/timothyylim/moscow-road/issues/1", {from: owner});
+      }).then(function() {
+        return factory.getContract(0, {from: owner});
+      }).then(function (address){
+        crowdfund = Crowdfund.at(address);
+        return crowdfund;
+      }).then(function (crowdfund){
+        return displayCrowdfund(crowdfund);
+      }).then(function(){
+        return factory.getNumberOfContracts.call();
+      }).then(function(num){
+        return console.log(num.toNumber());
+      });
 };
+
+function displayCrowdfund(crowdfund) {
+  crowdfund.getRepoOwner.call().then(function (message){console.log(message);});
+  crowdfund.getRepoAddress.call().then(function (message){console.log(message);});
+
+  var repoOwner;
+  var crowdfundDiv = $('<div></div>');
+  crowdfundDiv.append('<h3>issue</h3>')
+
+  return crowdfund.getRepoOwner.call()
+    .then(function(message){
+      return message;
+    }).then(function (message){
+      return crowdfundDiv.append("<p>Owner: </p>").append($("<p>").html(message));
+    }).then(function(){
+      return crowdfund.getRepoAddress.call();
+    }).then(function(message){
+      return message;
+    }).then(function (message){
+      return crowdfundDiv.append("<p>Location: </p>").append($("<a>").html(message));
+    }).then(function(){
+      return $(".container").append(crowdfundDiv);
+    });
+}
 
 window.onload = function() {
   web3.eth.getAccounts(function(err, accs) {
@@ -112,15 +153,17 @@ window.onload = function() {
     }
 
     accounts = accs;
-    account = accounts[0];
-    owner = accounts[1];
-    recepient = accounts[2];
-    // console.log(web3.eth.getBalance(Crowdfund.deployed_address).toNumber());
+    owner = accounts[0];
+    funder1 = accounts[1];
+    funder2 = accounts[2];
+    recepient = accounts[3];
+
+    // console.log(web3.eth.getBalance(Factory.deployed_address).toNumber());
     // console.log(Crowdfund.deployed().greet.call({from : account}));
     // console.log(Crowdfund.deployed().getRepoOwner());
 
-    setOwner();
-    refreshBalance();
-    refreshContractBalance();
+    // setOwner();
+    // refreshBalance();
+    // refreshContractBalance();
   });
 }

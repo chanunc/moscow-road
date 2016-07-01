@@ -27,7 +27,7 @@ contract Factory {
       return crowdfund_address;
   }
 
-  function getNumberOfContracts() constant returns (uint256){
+  function getNumberOfContracts() returns (uint256){
     return crowdfunds.length;
   }
 
