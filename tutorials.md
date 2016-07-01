@@ -54,6 +54,11 @@ create a contract from a contract:
 
 http://ethereum.stackexchange.com/questions/1415/solidity-create-contract-from-contract
 
+build dapps with meteor
+
+https://github.com/ethereum/wiki/wiki/Dapp-using-Meteor
+
+
 Things to consider:
 
 - ethereum alarm clock
