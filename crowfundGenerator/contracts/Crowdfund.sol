@@ -56,18 +56,20 @@ contract Crowdfund {
       throw;
   }
 
-  /* debug function */
-  function greet() constant returns (string) {
-      return "works";
-  }
-
-  /* debug function */
   function getRepoOwner() constant returns (address) {
       return repo_owner;
   }
 
-  /* debug function */
   function getRepoAddress() constant returns (string) {
       return repo_web_address;
+  }
+
+  function getNumberOfFunders() constant returns (uint256) {
+      return funders.length;
+  }
+
+  /* debug function */
+  function greet() constant returns (string) {
+      return "works";
   }
 }

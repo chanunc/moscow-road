@@ -2,6 +2,9 @@ import "Crowdfund.sol";
 
 contract Factory {
 
+  //Test mapping
+  mapping(string => int) map;
+
   // Array to hold generated crowdfund contracts
   CrowdfundStructure[] public crowdfunds;
 
@@ -24,6 +27,7 @@ contract Factory {
       Crowdfund crowdfund = Crowdfund(crowdfund_address);
       crowdfund.setRepoOwner(_repo_owner, _repo_web_address);
 
+
       return crowdfund_address;
   }
 
@@ -38,4 +42,16 @@ contract Factory {
   function sayHi() constant returns (string){
     return "Hello there";
   }
+
+  function testFunc() returns (string){
+    map["first"] = 1;
+    return "Hello";
+  }
+
+  function getTest() returns (int){
+    return map["first"];
+  }
+
+
+
 }
