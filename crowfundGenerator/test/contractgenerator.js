@@ -148,20 +148,42 @@ contract('Factory', function(accounts) {
   //     })
   // });
 
+// TO DELETE
   it("Retrieve item from a map", function(){
     var fac;
+    var account_zero = accounts[0];
 
     return Factory.new({ from: accounts[0] })
       .then(function(factory) {
-          fac = factory;
-          return factory.testFunc({from: accounts[0]})
-      }).then(function(){
-        return fac.getTest.call()
-      }).then(function(number){
-        console.log(number.toString());
+          factory.createContract2(accounts[0], "moscow-road","descriptor text", { from: accounts[0] })
+          return factory;
+        }).then(function(factory){
+            return factory.getContractByName.call("moscow-road");
+        }).then(function(addr){
+            var crowdfund = Crowdfund.at(addr);
+            return crowdfund;
+        }).then(function(crowdfund){
+           return crowdfund.greet.call();
+        }).then(function(message){
+            assert.equal(message, "works", "Message failed");
+        })
       })
-  });
 
-
-
+  // it("Create a contract and adds it to the map", function(){
+  //   var fact;
+  //
+  //   return Factory.new({from: accounts[0]})
+  //     .then(function(factory){
+  //       factory.createContractTest("moscow-road",accounts[0],"timothyylim.github.io");
+  //       return factory;
+  //     }).then(function(factory){
+  //       return factory.getContractTest("moscow-road", 0,{from: accounts[0]});
+  //     }).then(function(addr){
+  //       console.log(addr);
+  //       // var cf = Crowdfund.at(addr);
+  //     })
+  //     // .then(function(greeting) {
+  //     //   assert.equal(greeting, "works", "Check that the contract can say hi");
+  //     // })
+  // });
 });

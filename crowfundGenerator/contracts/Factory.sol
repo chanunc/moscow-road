@@ -3,7 +3,7 @@ import "Crowdfund.sol";
 contract Factory {
 
   //Test mapping
-  mapping(string => int) map;
+  mapping(string => address) map;
 
   // Array to hold generated crowdfund contracts
   CrowdfundStructure[] public crowdfunds;
@@ -26,8 +26,6 @@ contract Factory {
       // Set initial conditions
       Crowdfund crowdfund = Crowdfund(crowdfund_address);
       crowdfund.setRepoOwner(_repo_owner, _repo_web_address);
-
-
       return crowdfund_address;
   }
 
@@ -48,10 +46,23 @@ contract Factory {
     return "Hello";
   }
 
-  function getTest() returns (int){
-    return map["first"];
+  function getContractByName(string project_name) returns (address){
+    return map[project_name];
   }
 
 
+  function createContract2 (address _repo_owner, string _project_name, string _repo_web_address){
+
+      address crowdfund_address = new Crowdfund();
+
+      crowdfunds[crowdfunds.length++] = CrowdfundStructure({
+        addr: crowdfund_address
+      });
+
+      // Set initial conditions
+      Crowdfund crowdfund = Crowdfund(crowdfund_address);
+      crowdfund.setRepoOwner(_repo_owner, _repo_web_address);
+      map[_project_name] = crowdfund_address;
+  }
 
 }
