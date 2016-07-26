@@ -1,0 +1,8 @@
+Tuesday 26th July
+
+[x] show relevant information for each issue
+[x] add delete function
+[x] style each issue
+
+
+[ ] github integration

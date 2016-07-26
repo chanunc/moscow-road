@@ -2,6 +2,7 @@ var accounts;
 var account;
 var owner;
 var balance;
+var cf;
 
 function setStatus(message) {
   var status = document.getElementById("status");
@@ -9,71 +10,17 @@ function setStatus(message) {
 };
 
 function refreshBalance() {
-  // var meta = MetaCoin.deployed();
-  // meta.getBalance.call(account, {from: account}).then(function(value) {
-  //   var balance_element = document.getElementById("balance");
-  //   balance_element.innerHTML = value.valueOf();
-  // }).catch(function(e) {
-  //   console.log(e);
-  //   setStatus("Error getting balance; see log.");
-  // });
+  console.log("balance: ");
+  console.log(web3.eth.getBalance(cf.address).toNumber());
 };
 
-function refreshContractBalance() {
-
-    var crowdfund = Crowdfund.deployed();
-    var balance = web3.eth.getBalance(Crowdfund.deployed_address).toNumber();
-    var balance_element = document.getElementById("contract_balance");
-    balance_element.innerHTML = balance;
-
-    var address_element = document.getElementById("contract_address");
-    var owner_element = document.getElementById("repo_owner");
-    var location_element = document.getElementById("issue_location");
-
-
-    address_element.innerHTML = Crowdfund.deployed_address;
-    // crowdfund.getRepoOwner.call().then(
-    //   function (address) {
-    //       owner_element.innerHTML = address;
-    //   });
-    // crowdfund.getRepoAddress.call().then(
-    //   function (address) {
-    //       location_element.innerHTML = address;
-    //   });
-
-};
-
-
-
-function sendCoin() {
-  var meta = MetaCoin.deployed();
-
-  var amount = parseInt(document.getElementById("amount").value);
-  var receiver = document.getElementById("receiver").value;
-
-  setStatus("Initiating transaction... (please wait)");
-
-  meta.sendCoin(receiver, amount, {from: account}).then(function() {
-    setStatus("Transaction complete!");
-    refreshBalance();
-  }).catch(function(e) {
-    console.log(e);
-    setStatus("Error sending coin; see log.");
-  });
-};
 
 function pump() {
-  var crowdfund = Crowdfund.deployed();
-
+  
   var amount = 1;
-  var receiver = Crowdfund.deployed_address;
+  var receiver = cf.address;
 
-  // setStatus("Initiating transaction... (please wait)");
-
-  refreshContractBalance();
-  web3.eth.sendTransaction({value:amount, from:account, to:receiver, gas:1000000});
-  refreshContractBalance();
-
+  web3.eth.sendTransaction({value:amount, from:owner, to:receiver, gas:1000000});
 }
 
 
@@ -108,39 +55,118 @@ function createCrowdfund() {
         crowdfund = Crowdfund.at(address);
         return crowdfund;
       }).then(function (crowdfund){
+        cf = crowdfund;
         return displayCrowdfund(crowdfund);
       }).then(function(){
         return factory.getNumberOfContracts.call();
       }).then(function(num){
-        return console.log(num.toNumber());
+        // return console.log(num.toNumber());
+        return;
       });
 };
 
 function displayCrowdfund(crowdfund) {
-  crowdfund.getRepoOwner.call().then(function (message){console.log(message);});
-  crowdfund.getRepoAddress.call().then(function (message){console.log(message);});
-
+  // crowdfund.getRepoOwner.call().then(function (message){console.log(message);});
+  // crowdfund.getRepoAddress.call().then(function (message){console.log(message);});
   var repoOwner;
-  var crowdfundDiv = $('<div></div>');
-  crowdfundDiv.append('<h3>issue</h3>')
+  var crowdfundDiv = $('<div class="issue"></div>');
+
+
+  // console.log(web3.eth.getBalance(crowdfund.address).toNumber());
+
+
+  crowdfundDiv.append('<b>issue</b>' + ' ' + crowdfund.address + '</br>')
+  crowdfundDiv.append('Balance: ' + ' ' + web3.eth.getBalance(crowdfund.address).toNumber())
 
   return crowdfund.getRepoOwner.call()
     .then(function(message){
       return message;
     }).then(function (message){
-      return crowdfundDiv.append("<p>Owner: </p>").append($("<p>").html(message));
+      return crowdfundDiv.append("<p>Owner: </p>" + message);
     }).then(function(){
       return crowdfund.getRepoAddress.call();
     }).then(function(message){
       return message;
     }).then(function (message){
-      return crowdfundDiv.append("<p>Location: </p>").append($("<a>").html(message));
+      return crowdfundDiv.append("<p>Location: </p>" + message);
     }).then(function(){
       return $(".container").append(crowdfundDiv);
     });
 }
 
+function refresh(){
+
+  $(".container").empty();
+  var factory = Factory.deployed();
+
+  return factory.getNumberOfContracts.call()
+    .then(function(message){
+      var len = message.toNumber();
+      for (var i = 0; i < len; i++){
+          factory.getContract(i).
+          then(function(address){
+
+            crowdfund = Crowdfund.at(address);
+            return crowdfund;
+          }).then(function (crowdfund){
+            return displayCrowdfund(crowdfund);
+
+          });
+      }
+
+      return;
+    });
+
+
+}
+
+function printIndicies(){
+
+  console.log("printing");
+
+  var factory = Factory.deployed();
+
+  return factory.getNumberOfContracts.call()
+    .then(function(message){
+      var len = message.toNumber();
+      for (var i = 0; i < len; i++){
+          factory.getContract(i).
+          then(function(address){
+
+            crowdfund = Crowdfund.at(address);
+            return crowdfund;
+          }).then(function (crowdfund){
+            return crowdfund.getIndex();
+          }).then(function(index){
+            console.log(index.toNumber());
+            return;
+          });
+      }
+
+      return;
+    });
+}
+
+function deleteContract(){
+  console.log("deleting");
+
+  // get the first contract
+  var factory = Factory.deployed();
+
+  return factory.getContract(0)
+    .then(function(address){
+      crowdfund = Crowdfund.at(address);
+      crowdfund.destroySelf({from: owner});
+    })
+}
+
+
+
 window.onload = function() {
+
+
+  refresh();
+
   web3.eth.getAccounts(function(err, accs) {
     if (err != null) {
       alert("There was an error fetching your accounts.");

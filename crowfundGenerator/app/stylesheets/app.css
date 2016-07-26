@@ -1,7 +1,7 @@
 body {
-  margin-left: 25%;
-  margin-right: 25%;
-  margin-top: 5%;
+  margin-left: 15%;
+  margin-right: 15%;
+  /*margin-top: 5%;*/
   font-family: "Open Sans", sans-serif;
 }
 
@@ -11,7 +11,7 @@ label {
 }
 
 input {
-  width: 500px;
+  width:500px;
   padding: 5px;
   font-size: 16px;
 }
@@ -22,9 +22,9 @@ button {
 }
 
 h1, h2 {
-  display: inline-block;
+  display: block;
   vertical-align: middle;
-  margin-top: 0px;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -45,4 +45,11 @@ h3 {
 
 #balance {
   color: black;
+}
+
+.issue {
+  margin-top: 10px;
+  border-style: solid;
+  border-width: thin;
+  padding: 30px;
 }

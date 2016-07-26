@@ -1,7 +1,11 @@
+import "AbstractFactory.sol";
+
 contract Crowdfund {
 
   address public repo_owner;
   string public repo_web_address;
+  uint public index;
+  address public origin;
   bool public repo_owner_set;
   Funder[] public funders;
 
@@ -33,6 +37,25 @@ contract Crowdfund {
     }
     /*else*/
       /*throw;*/
+  }
+
+  function setIndex(uint i) returns (uint){
+    index = i;
+    return index;
+  }
+
+  function getIndex() constant returns (uint){
+    return index;
+  }
+
+  function setOrigin(address addr) {
+    origin = addr;
+  }
+
+  function destroySelf() returns (string) {
+    AbstractFactory(origin).deleteContract(index);
+    /*Factory.deleteContract(index);*/
+    return "destroyed self";
   }
 
 
