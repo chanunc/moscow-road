@@ -4,6 +4,21 @@ var owner;
 var balance;
 var cf;
 
+// debugger
+function getIssue(repo, issueNumber){
+  $.ajax({
+    // url: "https://api.github.com/repos/timothyylim/moscow-road/issues/1",
+    url: "https://api.github.com/repos/"+repo+"/issues/"+issueNumber,
+    context: document.body
+  }).done(function(data) {
+    // $( this ).addClass( "done" );
+    console.log(data);
+    console.log(data.body);
+  });
+}
+getIssue('timothyylim/moscow-road',1);
+
+
 function setStatus(message) {
   var status = document.getElementById("status");
   status.innerHTML = message;
